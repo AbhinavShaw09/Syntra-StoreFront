@@ -40,7 +40,6 @@ import {
 } from "@/components/ui/collapsible";
 
 import ProductCard from "@/components/products/ProductCard"
-
 import useProducts from "@/hooks/useProducts";
 // Sample product data
 type Product = {
