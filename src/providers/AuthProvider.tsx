@@ -1,9 +1,16 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { jwtDecode } from "jwt-decode";
 import { apiFetch } from "@/lib/api";
-import { endpoints } from "@/lib/endpoints";
+import { BakckendEndpoints } from "@/utils/endpoints";
+import { useCart } from "./CartProvider";
 
 type DecodedToken = {
   username: string;
@@ -20,14 +27,26 @@ type AuthContextType = {
   user: User | null;
   login: (username: string, password: string) => Promise<void>;
   logout: () => void;
+  register: (
+    username: string,
+    email: string,
+    password: string
+  ) => Promise<void>;
   loading: boolean;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  const { clearCart } = useCart();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+
+  const logout = useCallback(() => {
+    setUser(null);
+    localStorage.removeItem("accessToken");
+    clearCart();
+  }, [clearCart]);
 
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
@@ -45,7 +64,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       }
     }
     setLoading(false);
-  }, []);
+  }, [logout]);
 
   const login = async (username: string, password: string) => {
     try {
@@ -54,7 +73,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       const data = await apiFetch<
         LoginResponse,
         { username: string; password: string }
-      >(endpoints.AUTH.LOGIN, {
+      >(BakckendEndpoints.AUTH.LOGIN, {
         method: "POST",
         body: { username, password },
       });
@@ -70,13 +89,27 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem("accessToken");
+  const register = async (
+    username: string,
+    email: string,
+    password: string
+  ) => {
+    try {
+      type RegisterResponse = { msessage: string };
+      await apiFetch<
+        RegisterResponse,
+        { username: string; email: string; password: string }
+      >(BakckendEndpoints.AUTH.REGISTER, {
+        method: "POST",
+        body: { username, email, password },
+      });
+    } catch (error) {
+      console.error("Registration error:", error);
+      throw error;
+    }
   };
-
   return (
-    <AuthContext.Provider value={{ user, login, logout, loading }}>
+    <AuthContext.Provider value={{ user, login, logout, register, loading }}>
       {children}
     </AuthContext.Provider>
   );

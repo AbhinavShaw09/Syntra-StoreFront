@@ -27,7 +27,12 @@ export async function apiFetch<TResponse = unknown, TBody = unknown>(
 
   if (!res.ok) {
     const errorData = await res.json().catch(() => ({}));
-    throw new Error(errorData.detail || errorData.message || "API error");
+    throw new Error(
+      errorData.detail ||
+        errorData.message ||
+        (errorData.non_field_errors && errorData.non_field_errors.join(", ")) ||
+        "API error"
+    );
   }
 
   const data: TResponse = await res.json();

@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   /* config options here */
   remotePatterns: [new URL('https://images.unsplash.com/**')],
   images: {
-    domains: ["images.unsplash.com"],
+    domains: ["unsplash.com", "images.unsplash.com"],
   },
 };
 

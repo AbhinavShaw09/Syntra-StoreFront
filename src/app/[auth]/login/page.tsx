@@ -1,6 +1,5 @@
 "use client";
 
-
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -17,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/providers/AuthProvider";
+import { showToast } from "@/lib/toast";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -32,13 +32,21 @@ export default function LoginPage() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      await login(username, password);
-      router.push("/checkout");
-    } catch {
-      alert("Login failed");
-    }
+    login(username, password)
+      .then(() => {
+        router.push("/checkout");
+      })
+      .catch(() => {
+        showToast({
+          title: "Signup failed",
+          description: "Please try again.",
+          type: "error",
+          actionLabel: "Retry",
+          onActionClick: () => console.log("Retry clicked"),
+        });
+      });
   };
+
   return (
     <div className="flex min-h-[92vh] items-center justify-center">
       <Card className="w-full max-w-sm">
@@ -57,11 +65,11 @@ export default function LoginPage() {
           <form onSubmit={handleLogin}>
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="username">Username</Label>
                 <Input
-                  id="email"
-                  type="email"
-                  placeholder="m@example.com"
+                  id="username"
+                  type="username"
+                  placeholder="username"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   required
@@ -86,7 +94,7 @@ export default function LoginPage() {
                 />
               </div>
             </div>
-            <Button type="submit" className="w-full mt-6" onClick={handleLogin}>
+            <Button type="submit" className="w-full mt-6">
               Login
             </Button>
           </form>
