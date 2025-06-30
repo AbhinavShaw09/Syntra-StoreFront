@@ -6,6 +6,7 @@ import {
   Search,
   Filter,
   ChevronDown,
+  Link,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -52,6 +53,7 @@ type Product = {
   rating: number;
   reviews: number;
   inStock: boolean;
+  inventory_count: number,
 };
 
 const sampleProducts: Product[] = [
@@ -391,7 +393,13 @@ export default function AllProducts() {
               className={"grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"}
             >
               {products.map((product) => (
-                <ProductCard key={product.id} product={product} />
+                <a
+                  href={`/products/${product.id}`}
+                  key={product.id}
+                  className="block"
+                >
+                  <ProductCard product={product} />
+                </a>
               ))}
             </div>
           )}
