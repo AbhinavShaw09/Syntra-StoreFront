@@ -17,8 +17,10 @@ import { useCart } from "@/providers/CartProvider";
 interface Product {
   id: string;
   name: string;
-  price: number;
+  original_price: number;
+  selling_price: number;
   reviews: number;
+  rating: number,
   inventory_count: number;
   inStock: boolean;
   image: string;
@@ -38,7 +40,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           <div className="aspect-square bg-gray-100 flex items-center justify-center">
             <span className="text-gray-400 text-sm">Product Image</span>
           </div>
-          {product.originalPrice && (
+          {product?.original_price && (
             <Badge className="absolute top-2 left-2 bg-red-500">Sale</Badge>
           )}
           <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -66,7 +68,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                 <Star
                   key={i}
                   className={`h-3 w-3 ${
-                    i < Math.floor(product.rating)
+                    i < Math.floor(product.selling_price)
                       ? "fill-yellow-400  -yellow-400"
                       : "text-gray-300"
                   }`}
@@ -76,10 +78,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             <span className="text-xs text-gray-600">({product.reviews})</span>
           </div>
           <div className="flex items-center space-x-2">
-            <span className="font-bold text-lg">${product.price}</span>
-            {product.originalPrice && (
+            <span className="font-bold text-lg">${product.selling_price}</span>
+            {product.original_price && (
               <span className="text-sm text-gray-500 line-through">
-                ${product.originalPrice}
+                ${product.original_price}
               </span>
             )}
           </div>
@@ -92,7 +94,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             addToCart({
               id: Number(product.id),
               name: product.name,
-              price: product.price,
+              price: product.selling_price,
               rating: product.rating,
               reviews: product.reviews,
               inStock: product.inventory_count > 0,

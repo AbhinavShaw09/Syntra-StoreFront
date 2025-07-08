@@ -46,7 +46,7 @@ import useProducts from "@/hooks/useProducts";
 type Product = {
   id: string;
   name: string;
-  price: number;
+  selling_price: number;
   originalPrice?: number;
   image: string;
   category?: string;
@@ -55,21 +55,6 @@ type Product = {
   inStock: boolean;
   inventory_count: number,
 };
-
-const sampleProducts: Product[] = [
-  {
-    id: "1",
-    name: "Wireless Bluetooth Headphones",
-    price: 79.99,
-    originalPrice: 99.99,
-    image: "/api/placeholder/300/300",
-    // category: "electronics",
-    rating: 4.5,
-    reviews: 324,
-    inStock: true,
-  },
-];
-
 
 // Filter options
 const categories = [
@@ -110,7 +95,7 @@ export default function AllProducts() {
     // Price filter
     filtered = filtered.filter(
       (product) =>
-        product.price >= priceRange[0] && product.price <= priceRange[1]
+        product.selling_price >= priceRange[0] && product.selling_price <= priceRange[1]
     );
 
     // Stock filter
@@ -121,10 +106,10 @@ export default function AllProducts() {
     // Sort products
     switch (sortBy) {
       case "price-low":
-        filtered.sort((a, b) => a.price - b.price);
+        filtered.sort((a, b) => a.selling_price - b.selling_price);
         break;
       case "price-high":
-        filtered.sort((a, b) => b.price - a.price);
+        filtered.sort((a, b) => b.selling_price - a.selling_price);
         break;
       case "rating":
         filtered.sort((a, b) => b.rating - a.rating);

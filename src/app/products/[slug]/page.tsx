@@ -10,7 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { Star, ShoppingCart, Minus, Plus } from 'lucide-react'; 
+import { Star, ShoppingCart, Minus, Plus, Fullscreen } from 'lucide-react'; 
 
 interface Product {
   id: string;
@@ -43,10 +43,10 @@ const product: Product = {
   shortDescription: 'Immersive sound experience with crystal-clear audio and comfortable earcups for extended listening sessions.',
   longDescription: 'Experience unparalleled audio quality with the Premium Wireless Headphones. Featuring advanced noise-cancellation technology, a long-lasting battery, and ergonomic design, these headphones are perfect for audiophiles and casual listeners alike. Enjoy deep bass, crisp highs, and a balanced mid-range for all your favorite music genres. Connect effortlessly via Bluetooth 5.2 for a stable and fast connection.',
   images: [
-    '/placeholder-headphone-1.jpg', // Replace with actual image paths
-    '/placeholder-headphone-2.jpg',
-    '/placeholder-headphone-3.jpg',
-    '/placeholder-headphone-4.jpg',
+    '/image-placeholder.png',
+    '/image-placeholder.png',
+    '/image-placeholder.png',
+    '/image-placeholder.png', 
   ],
   colors: [
     { name: 'Black', hex: '#000000' },
@@ -101,7 +101,7 @@ const ProductPage: React.FC = () => {
               />
             </DialogTrigger>
             <DialogContent className="max-w-3xl">
-              <Image src={selectedImage} alt={product.name} className="w-full h-auto object-contain" />
+              <Image src={selectedImage} alt={product.name} className="w-full h-auto object-contain" width={100} height={100} />
             </DialogContent>
           </Dialog>
 
@@ -110,7 +110,7 @@ const ProductPage: React.FC = () => {
               <Image
                 key={index}
                 src={image}
-                      width = {100}
+                width = {100}
                 height={100}
                 alt={`${product.name} thumbnail ${index + 1}`}
                 className={`w-20 h-20 rounded-md cursor-pointer object-cover border-2 ${
@@ -322,33 +322,6 @@ const ProductPage: React.FC = () => {
             </AccordionContent>
           </AccordionItem>
         </Accordion>
-      </div>
-
-      {/* Related Products Section (Example using Cards) */}
-      <div className="mt-12">
-        <h2 className="text-2xl font-bold mb-6">Related Products</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {/* Dummy Related Products (replace with actual data) */}
-          {[1, 2, 3, 4].map((item) => (
-            <Card key={item}>
-              <CardContent className="p-4">
-                <Image
-                  src={`/placeholder-product-${item}.jpg`}
-                        width = {100}
-                height={100}
-                  alt={`Related Product ${item}`}
-                  className="w-full h-48 object-cover rounded-md mb-4"
-                />
-                <h3 className="font-semibold text-lg mb-1">Related Product {item}</h3>
-                <p className="text-muted-foreground text-sm mb-2">Category</p>
-                <div className="flex items-baseline justify-between">
-                  <span className="text-xl font-bold">${(50 + item * 10).toFixed(2)}</span>
-                  <Button size="sm">Add to Cart</Button>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
       </div>
     </div>
   );
