@@ -11,7 +11,7 @@ import React, {
 // import { apiFetch } from "@/lib/api";
 // import { BakckendEndpoints } from "@/lib/endpoints";
 
-type CartItem = {
+export type CartItem = {
   id: number;
   name: string;
   selling_price: number;
@@ -19,7 +19,7 @@ type CartItem = {
   image: string;
 };
 
-type CartContextType = {
+export type CartContextType = {
   cart: CartItem[];
   totalItems: number;
   totalQuantity: number;

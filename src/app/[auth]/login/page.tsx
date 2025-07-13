@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/providers/AuthProvider";
 import { showToast } from "@/lib/toast";
+import { isTokenExpired } from "@/utils/tokenExpired";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -26,7 +27,10 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (user) {
-      router.push("/");
+      const isExpired = isTokenExpired(user.accessToken);
+      if (!isExpired) {
+        router.push("/");
+      }
     }
   }, [user, router]);
 
