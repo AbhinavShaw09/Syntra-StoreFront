@@ -1,13 +1,7 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import {
-  X,
-  Search,
-  Filter,
-  ChevronDown,
-  Link,
-} from "lucide-react";
+import { X, Search, Filter, ChevronDown, Link } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -40,7 +34,7 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 
-import ProductCard from "@/components/products/ProductCard"
+import ProductCard from "@/components/products/ProductCard";
 import useProducts from "@/hooks/useProducts";
 // Sample product data
 type Product = {
@@ -53,7 +47,7 @@ type Product = {
   rating: number;
   reviews: number;
   inStock: boolean;
-  inventory_count: number,
+  inventory_count: number;
 };
 
 // Filter options
@@ -64,7 +58,6 @@ const categories = [
 ];
 
 export default function AllProducts() {
-
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [priceRange, setPriceRange] = useState([0, 300]);
@@ -72,7 +65,6 @@ export default function AllProducts() {
   const [showInStockOnly, setShowInStockOnly] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const { products }: { products: Product[] } = useProducts();
-
 
   // Filter products based on all criteria
   const filteredProducts = useMemo(() => {
@@ -87,15 +79,17 @@ export default function AllProducts() {
 
     // Category filter
     if (selectedCategories.length > 0) {
-      filtered = filtered.filter((product) =>
-        product.category && selectedCategories.includes(product.category)
+      filtered = filtered.filter(
+        (product) =>
+          product.category && selectedCategories.includes(product.category)
       );
     }
 
     // Price filter
     filtered = filtered.filter(
       (product) =>
-        product.selling_price >= priceRange[0] && product.selling_price <= priceRange[1]
+        product.selling_price >= priceRange[0] &&
+        product.selling_price <= priceRange[1]
     );
 
     // Stock filter
@@ -148,7 +142,11 @@ export default function AllProducts() {
     defaultOpen?: boolean;
   };
 
-  const FilterSection: React.FC<FilterSectionProps> = ({ title, children, defaultOpen = true }) => {
+  const FilterSection: React.FC<FilterSectionProps> = ({
+    title,
+    children,
+    defaultOpen = true,
+  }) => {
     const [isOpen, setIsOpen] = useState(defaultOpen);
 
     return (
@@ -378,13 +376,7 @@ export default function AllProducts() {
               className={"grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"}
             >
               {products.map((product) => (
-                <a
-                  href={`/products/${product.id}`}
-                  key={product.id}
-                  className="block"
-                >
-                  <ProductCard product={product} />
-                </a>
+                <ProductCard key={product.id} product={product} />
               ))}
             </div>
           )}

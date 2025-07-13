@@ -62,12 +62,14 @@ export default function Navbar() {
               variant="ghost"
               className="rounded-full flex items-center justify-center"
             >
-              <ShoppingCart className="h-10 w-10" />
-              {hasMounted && totalQuantity > 0 && (
-                <span className="relative -top-2 right-3 flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-red-600 rounded-full">
-                  {totalQuantity}
-                </span>
-              )}
+              <div className="relative">
+                <ShoppingCart className="h-10 w-10" />
+                {hasMounted && totalQuantity > 0 && (
+                  <span className="absolute -top-3 -right-3 flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-red-600 rounded-full">
+                    {totalQuantity}
+                  </span>
+                )}
+              </div>
             </Button>
           </Link>
         </div>

@@ -14,7 +14,7 @@ import React, {
 type CartItem = {
   id: number;
   name: string;
-  price: number;
+  selling_price: number;
   quantity: number;
   image: string;
 };
@@ -57,7 +57,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
 
   const totalPrice = useMemo(() => {
     return Number(
-      cart.reduce((total, item) => total + item.price * item.quantity, 0)
+      cart.reduce((total, item) => total + item.selling_price * item.quantity, 0)
     ).toFixed(2);
   }, [cart]);
 

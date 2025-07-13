@@ -7,6 +7,12 @@ export const BakckendEndpoints = {
     LOGOUT: `${API_BASE}/auth/logout/`,
   },
   PRODUCT: {
-    LIST_BUYER_PRODUCTS: `${API_BASE}/products/`,
-  }
-}
+    LIST_BUYER_PRODUCTS: `${API_BASE}/buyer/products/`,
+  },
+  BUYER: {
+    GET_BUYER_ADDRESS: `${API_BASE}/buyer/address/`,
+  },
+  ADDRESS: {
+    CREATE_BUYER_ADDRESS: `${API_BASE}/buyer/address/create/`,
+  },
+};

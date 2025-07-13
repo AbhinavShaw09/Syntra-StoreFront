@@ -46,7 +46,7 @@ const Cart = () => {
                       className="flex items-center gap-4"
                     >
                       <Image
-                        src={item.image}
+                        src={item.image? item.image: "/image-placeholder.png"}
                         alt={item.name}
                         className="size-16 rounded-sm object-cover"
                         height={300}
@@ -87,11 +87,9 @@ const Cart = () => {
                             {" "}
                             Quantity{" "}
                           </label>
-
                           <input
                             type="number"
                             min="1"
-                            defaultValue="1"
                             value={item.quantity}
                             id={`Line${idx + 1}Qty`}
                             readOnly

@@ -10,14 +10,14 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { Star, ShoppingCart, Minus, Plus, Fullscreen } from 'lucide-react'; 
+import { Star, ShoppingCart, Minus, Plus } from 'lucide-react'; 
 
 interface Product {
   id: string;
   name: string;
   brand: string;
-  price: number;
   compareAtPrice?: number;
+  original_price: number;
   rating: number;
   numReviews: number;
   shortDescription: string;
@@ -36,7 +36,7 @@ const product: Product = {
   id: 'product-123',
   name: 'Premium Wireless Headphones',
   brand: 'AudioTech',
-  price: 199.99,
+  original_price: 199.99,
   compareAtPrice: 249.99,
   rating: 4.7,
   numReviews: 128,
@@ -146,7 +146,7 @@ const ProductPage: React.FC = () => {
 
           {/* Price */}
           <div className="flex items-baseline gap-2">
-            <span className="text-4xl font-bold text-primary">${product.price.toFixed(2)}</span>
+            <span className="text-4xl font-bold text-primary">${product.original_price.toFixed(2)}</span>
             {product.compareAtPrice && (
               <span className="text-lg line-through text-muted-foreground">${product.compareAtPrice.toFixed(2)}</span>
             )}
@@ -317,7 +317,7 @@ const ProductPage: React.FC = () => {
             <AccordionTrigger>Warranty</AccordionTrigger>
             <AccordionContent>
               <p className="text-muted-foreground">
-                This product comes with a 1-year manufacturer's warranty covering defects in materials and workmanship.
+                This product comes with a 1-year manufacturer&apos;s warranty covering defects in materials and workmanship.
               </p>
             </AccordionContent>
           </AccordionItem>
