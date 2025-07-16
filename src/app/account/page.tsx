@@ -1,10 +1,11 @@
 "use client";
 
+import Link from "next/link";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import BuyerAddressManager from "@/components/checkout/BuyerAddressManager";
 import { useAuth } from "@/providers/AuthProvider";
-import Link from "next/link";
 
 export default function AccountPage() {
   const { user, logout } = useAuth();
@@ -60,7 +61,7 @@ export default function AccountPage() {
                   <h3 className="text-xl font-semibold mb-4">
                     Manage Addresses
                   </h3>
-                  <p>Add or edit your delivery addresses here.</p>
+                  <BuyerAddressManager />
                 </div>
               ) : (
                 <div>
@@ -72,7 +73,7 @@ export default function AccountPage() {
                     </Link>{" "}
                     to manage your addresses.
                   </p>
-                </div>  
+                </div>
               )}
             </TabsContent>
 

@@ -11,7 +11,7 @@ interface CartCheckout {
   totalQuantity: number;
   totalPrice: string;
   handlePlaceOrder: () => void;
-  removeFromCart:(id: number) => void;
+  removeFromCart: (id: number) => void;
 }
 
 const CartCheckout = ({
@@ -21,7 +21,7 @@ const CartCheckout = ({
   totalQuantity,
   totalPrice,
   handlePlaceOrder,
-  removeFromCart
+  removeFromCart,
 }: CartCheckout) => {
   return (
     <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
@@ -140,14 +140,16 @@ const CartCheckout = ({
           )}
         </div>
       </div>
-      <div className="w-full flex flex-col my-2">
-        <button
-          className="block rounded-sm bg-violet-600 px-5 py-3 text-sm text-white transition hover:bg-violet-500 cursor-pointer"
-          onClick={handlePlaceOrder}
-        >
-          Place Order
-        </button>
-      </div>
+      {totalQuantity > 0 && (
+        <div className="w-full flex flex-col my-2">
+          <button
+            className="block rounded-sm bg-violet-600 px-5 py-3 text-sm text-white transition hover:bg-violet-500 cursor-pointer"
+            onClick={handlePlaceOrder}
+          >
+            Place Order
+          </button>
+        </div>
+      )}
     </div>
   );
 };

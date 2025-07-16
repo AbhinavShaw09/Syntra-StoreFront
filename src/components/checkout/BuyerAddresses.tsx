@@ -63,6 +63,7 @@ const BuyerAddresses = ({
                         </div>
                       ))}
                       <div
+                        key="add-address"
                         className="border p-4 rounded-md flex items-center justify-center cursor-pointer hover:bg-gray-100 transition"
                         onClick={() => setIsAddFormOpen(true)}
                       >

@@ -51,10 +51,7 @@ export const useBuyerAddresses = () => {
     );
   };
 
-  const handlePlaceOrder = () => {
-    alert("Generate Payment Link");
-  };
-
+  
   useEffect(() => {
     if (!loading && !user) {
       router.push("auth/login");
@@ -97,8 +94,7 @@ export const useBuyerAddresses = () => {
     error,
     selectedAddress,
     setIsAddFormOpen,
-    handleAddAddress,
-    handlePlaceOrder,
+    handleAddAddress, 
     handleSelectedAddress,
   };
 };

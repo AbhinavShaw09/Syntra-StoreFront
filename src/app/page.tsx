@@ -12,7 +12,7 @@ function ImagesSliderDemo() {
     "https://images.unsplash.com/photo-1713256752744-fad1d7a8684c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   ];
   return (
-    <ImagesSlider className="h-[50rem] w-[92rem]" images={images}>
+    <ImagesSlider className="h-[60rem] w-[92rem]" images={images}>
       <motion.div
         initial={{
           opacity: 0,
