@@ -4,8 +4,10 @@ import React from "react";
 import { useCart } from "@/providers/CartProvider";
 import CartCheckout from "@/components/checkout/CartCheckout";
 import BuyerAddressManager from "@/components/checkout/BuyerAddressManager";
+import { useHasMounted } from "@/hooks/hasMounted";
 
 const Checkout = () => {
+  const hasMounted = useHasMounted();
   const {
     cart,
     removeFromCart,
@@ -14,6 +16,8 @@ const Checkout = () => {
     totalQuantity,
     totalPrice,
   } = useCart();
+
+  if (!hasMounted) return null;
 
   const handlePlaceOrder = () => {
     alert("Generate Payment Link");

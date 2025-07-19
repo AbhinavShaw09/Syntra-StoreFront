@@ -47,7 +47,7 @@ const CartCheckout = ({
               </li>
             ) : (
               cart.map((item, idx) => (
-                <li key={item.id || idx} className="flex items-center gap-4">
+                <li key={item.product_id || idx} className="flex items-center gap-4">
                   <Image
                     src={item.image ? item.image : "/image-placeholder.png"}
                     alt={item.name}
@@ -75,7 +75,7 @@ const CartCheckout = ({
                   <div className="flex flex-1 items-center justify-end gap-2">
                     <button
                       className="text-gray-600 transition hover:text-red-600 cursor-pointer"
-                      onClick={() => increaseItemQuantity(item.id)}
+                      onClick={() => increaseItemQuantity(item.product_id)}
                     >
                       <span className="sr-only">Increase Item Quantity</span>+
                     </button>
@@ -96,13 +96,13 @@ const CartCheckout = ({
 
                     <button
                       className="text-gray-600 transition hover:text-red-600 cursor-pointer"
-                      onClick={() => decreaseItemQuantity(item.id)}
+                      onClick={() => decreaseItemQuantity(item.product_id)}
                     >
                       <span className="sr-only">Decrease Item Quantity</span>-
                     </button>
                     <button
                       className="text-gray-600 transition hover:text-red-600 ml-6 cursor-pointer"
-                      onClick={() => removeFromCart(item.id)}
+                      onClick={() => removeFromCart(item.product_id)}
                     >
                       <span className="sr-only">Remove item</span>
 

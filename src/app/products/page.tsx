@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import { X, Search, Filter, ChevronDown, Link } from "lucide-react";
+import { X, Search, Filter, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -41,7 +41,7 @@ type Product = {
   id: string;
   name: string;
   selling_price: number;
-  originalPrice?: number;
+  original_price: number;
   image: string;
   category?: string;
   rating: number;

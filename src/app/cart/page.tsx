@@ -1,9 +1,12 @@
 "use client";
 
-import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "@/providers/CartProvider";
+
+import LoaderState from "@/components/common/LoaderState";
+import NotFound404 from "@/components/common/NotFound";
+import { useCheckout } from "@/hooks/useCheckoutReturn";
 
 const Cart = () => {
   const {
@@ -15,6 +18,16 @@ const Cart = () => {
     totalQuantity,
     totalPrice,
   } = useCart();
+
+  const { handleCheckout, isLoading, error } = useCheckout();
+
+  if (isLoading) {
+    return <LoaderState />;
+  }
+  if (error) {
+    return <NotFound404 />;
+  }
+
   return (
     <section>
       <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
@@ -40,7 +53,10 @@ const Cart = () => {
                 </li>
               ) : (
                 cart.map((item, idx) => (
-                  <li key={item.id || idx} className="flex items-center gap-4">
+                  <li
+                    key={item.product_id || idx}
+                    className="flex items-center gap-4"
+                  >
                     <Image
                       src={item.image ? item.image : "/image-placeholder.png"}
                       alt={item.name}
@@ -68,7 +84,7 @@ const Cart = () => {
                     <div className="flex flex-1 items-center justify-end gap-2">
                       <button
                         className="text-gray-600 transition hover:text-red-600 cursor-pointer"
-                        onClick={() => increaseItemQuantity(item.id)}
+                        onClick={() => increaseItemQuantity(item.product_id)}
                       >
                         <span className="sr-only">Increase Item Quantity</span>+
                       </button>
@@ -92,13 +108,13 @@ const Cart = () => {
 
                       <button
                         className="text-gray-600 transition hover:text-red-600 cursor-pointer"
-                        onClick={() => decreaseItemQuantity(item.id)}
+                        onClick={() => decreaseItemQuantity(item.product_id)}
                       >
                         <span className="sr-only">Decrease Item Quantity</span>-
                       </button>
                       <button
                         className="text-gray-600 transition hover:text-red-600 ml-6 cursor-pointer"
-                        onClick={() => removeFromCart(item.id)}
+                        onClick={() => removeFromCart(item.product_id)}
                       >
                         <span className="sr-only">Remove item</span>
 
@@ -141,12 +157,28 @@ const Cart = () => {
                     >
                       Clear Cart
                     </button>
-                    <Link
-                      href="/checkout"
-                      className="block rounded-sm bg-gray-700 px-5 py-3 text-sm text-gray-100 transition hover:bg-gray-600"
+                    <button
+                      className="block rounded-sm  bg-gray-700 px-5 py-3 text-sm text-gray-100 transition hover:bg-gray-600 cursor-pointer"
+                      onClick={() =>
+                        handleCheckout(
+                          cart.map(
+                            ({
+                              product_id,
+                              name,
+                              selling_price,
+                              quantity,
+                            }) => ({
+                              product_id,
+                              name,
+                              selling_price: selling_price.toString(),
+                              quantity,
+                            })
+                          )
+                        )
+                      }
                     >
-                      Continue
-                    </Link>
+                      Checkout
+                    </button>
                   </div>
                 </div>
               </div>

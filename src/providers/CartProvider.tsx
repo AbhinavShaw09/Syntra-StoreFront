@@ -8,11 +8,9 @@ import React, {
   useMemo,
   useCallback,
 } from "react";
-// import { apiFetch } from "@/lib/api";
-// import { BakckendEndpoints } from "@/lib/endpoints";
 
 export type CartItem = {
-  id: number;
+  product_id: number;
   name: string;
   selling_price: number;
   quantity: number;
@@ -57,19 +55,22 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
 
   const totalPrice = useMemo(() => {
     return Number(
-      cart.reduce((total, item) => total + item.selling_price * item.quantity, 0)
+      cart.reduce(
+        (total, item) => total + item.selling_price * item.quantity,
+        0
+      )
     ).toFixed(2);
   }, [cart]);
 
   const addToCart = useCallback(
     (item: Omit<CartItem, "quantity"> & { quantity?: number }) => {
       setCart((prev) => {
-        const existingItem = prev.find((i) => i.id === item.id);
+        const existingItem = prev.find((i) => i.product_id === item.product_id);
         const quantityToAdd = item.quantity ?? 1;
 
         if (existingItem) {
           return prev.map((i) =>
-            i.id === item.id
+            i.product_id === item.product_id
               ? { ...i, quantity: i.quantity + quantityToAdd }
               : i
           );
@@ -81,7 +82,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   );
 
   const removeFromCart = useCallback((id: number) => {
-    setCart((prev) => prev.filter((item) => item.id !== id));
+    setCart((prev) => prev.filter((item) => item.product_id !== id));
   }, []);
 
   const clearCart = useCallback(() => {
@@ -91,21 +92,23 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const increaseItemQuantity = useCallback((id: number) => {
     setCart((prev) =>
       prev.map((item) =>
-        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+        item.product_id === id ? { ...item, quantity: item.quantity + 1 } : item
       )
     );
   }, []);
 
   const decreaseItemQuantity = useCallback((id: number) => {
     setCart((prev) => {
-      const itemToUpdate = prev.find((item) => item.id === id);
+      const itemToUpdate = prev.find((item) => item.product_id === id);
       if (itemToUpdate) {
         if (itemToUpdate.quantity > 1) {
           return prev.map((item) =>
-            item.id === id ? { ...item, quantity: item.quantity - 1 } : item
+            item.product_id === id
+              ? { ...item, quantity: item.quantity - 1 }
+              : item
           );
         } else {
-          return prev.filter((item) => item.id !== id);
+          return prev.filter((item) => item.product_id !== id);
         }
       }
       return prev;
@@ -115,10 +118,10 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const updateItemQuantity = useCallback((id: number, newQuantity: number) => {
     setCart((prev) => {
       if (newQuantity <= 0) {
-        return prev.filter((item) => item.id !== id);
+        return prev.filter((item) => item.product_id !== id);
       }
       return prev.map((item) =>
-        item.id === id ? { ...item, quantity: newQuantity } : item
+        item.product_id === id ? { ...item, quantity: newQuantity } : item
       );
     });
   }, []);

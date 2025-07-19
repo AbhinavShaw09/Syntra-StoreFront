@@ -33,6 +33,7 @@ type AuthContextType = {
     password: string
   ) => Promise<void>;
   loading: boolean;
+  isTokenExpired: boolean;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -41,6 +42,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const { clearCart } = useCart();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const[isTokenExpired, setIsTokenExpired] = useState(false);
 
   const logout = useCallback(() => {
     setUser(null);
@@ -55,6 +57,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         const decoded = jwtDecode<DecodedToken>(token);
         if (decoded.exp * 1000 < Date.now()) {
           logout();
+          setIsTokenExpired(true);
         } else {
           setUser({ accessToken: token, decoded });
         }
@@ -109,7 +112,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
   return (
-    <AuthContext.Provider value={{ user, login, logout, register, loading }}>
+    <AuthContext.Provider value={{ user, login, logout, register, loading, isTokenExpired }}>
       {children}
     </AuthContext.Provider>
   );

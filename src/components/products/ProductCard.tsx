@@ -18,7 +18,7 @@ interface Product {
   id: string;
   name: string;
   selling_price: number;
-  original_price: number;
+  original_price: number ;
   reviews: number;
   rating: number;
   inventory_count: number;
@@ -98,7 +98,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           className="w-full bg-violet-600 dark:bg-slate-900 text-white dark:text-white border-neutral-200 dark:border-slate-100 cursor-pointer"
           onClick={() =>
             addToCart({
-              id: Number(product.id),
+              product_id: Number(product.id),
               name: product.name,
               selling_price: product.selling_price,
               image: product.image,

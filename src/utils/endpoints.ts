@@ -15,4 +15,7 @@ export const BakckendEndpoints = {
   ADDRESS: {
     CREATE_BUYER_ADDRESS: `${API_BASE}/buyer/address/create/`,
   },
+  CART: {
+    ADD_TO_CART: `${API_BASE}/buyer/cart/`,
+  },
 };
