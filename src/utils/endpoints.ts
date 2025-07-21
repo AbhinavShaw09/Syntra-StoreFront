@@ -18,4 +18,8 @@ export const BakckendEndpoints = {
   CART: {
     ADD_TO_CART: `${API_BASE}/buyer/cart/`,
   },
+  ACCOUNT:{
+    GET_ACCOUNT_DETAILS: `${API_BASE}/buyer/account/details/`,
+    UPDATE_ACCOUNT_DETAILS: `${API_BASE}/buyer/account/update/`,
+  }
 };

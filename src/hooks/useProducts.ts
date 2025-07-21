@@ -1,4 +1,3 @@
-// hooks/useProducts.js
 import { useEffect, useState } from "react";
 import { BakckendEndpoints } from "@/utils/endpoints";
 import { showToast } from "@/lib/toast";

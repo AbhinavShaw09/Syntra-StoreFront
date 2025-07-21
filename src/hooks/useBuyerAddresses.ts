@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
+import { z } from "zod";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
-import { BuyerAddress } from "@/types/buyer";
 import {
   fetchAllBuyerAddresses,
   createBuyerAddressApi,
 } from "@/services/buyer/buyerAddress.api";
-import { isTokenExpired } from "@/utils/tokenExpired";
-import { z } from "zod";
+
 import { addressSchema } from "@/schemas/AddressSchema";
 import { useAuth } from "@/providers/AuthProvider";
+import { BuyerAddress } from "@/types/buyer";
 
 export const useBuyerAddresses = () => {
   const router = useRouter();
@@ -51,41 +51,33 @@ export const useBuyerAddresses = () => {
     );
   };
 
-  
   useEffect(() => {
     if (!loading && !user) {
       router.push("auth/login");
     }
   }, [loading, user, router]);
 
-  useEffect(() => {
-    const fetchAddresses = async () => {
-      setIsLoading(true);
-      setError(null);
-      try {
-        const response = await fetchAllBuyerAddresses(user?.accessToken);
-        setAddresses(response);
-      } catch (err: unknown) {
-        const errorMessage =
-          err instanceof Error ? err.message : "An unknown error occurred.";
-        setError(errorMessage);
-        toast.error("Failed to load addresses", {
-          description: errorMessage,
-        });
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    if (user?.accessToken) {
-      const isExpired = isTokenExpired(user.accessToken);
-      if (isExpired) {
-        router.push("/auth/login/");
-      } else {
-        fetchAddresses();
-      }
+  const fetchAddresses = useCallback(async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const response = await fetchAllBuyerAddresses(user?.accessToken);
+      setAddresses(response);
+    } catch (err: unknown) {
+      const errorMessage =
+        err instanceof Error ? err.message : "An unknown error occurred.";
+      setError(errorMessage);
+      toast.error("Failed to load addresses", {
+        description: errorMessage,
+      });
+    } finally {
+      setIsLoading(false);
     }
-  }, [user, router]);
+  }, [user?.accessToken]);
+
+  useEffect(() => {
+    fetchAddresses();
+  }, [fetchAddresses]);
 
   return {
     addresses,
@@ -94,7 +86,7 @@ export const useBuyerAddresses = () => {
     error,
     selectedAddress,
     setIsAddFormOpen,
-    handleAddAddress, 
+    handleAddAddress,
     handleSelectedAddress,
   };
 };

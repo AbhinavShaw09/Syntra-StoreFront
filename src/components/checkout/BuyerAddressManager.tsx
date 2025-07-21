@@ -2,10 +2,10 @@
 
 import { useBuyerAddresses } from "@/hooks/useBuyerAddresses";
 import LoaderState from "@/components/common/LoaderState";
-import NotFound from "@/app/not-found";
 import BuyerAddresses from "./BuyerAddresses";
 import { AddAddressForm } from "@/components/account/AddAddressForm";
 import { BuyerAddress } from "@/types/buyer";
+import NotFound404 from "../common/NotFound";
 
 type Props = {
   onAddressSelect?: (address: BuyerAddress) => void;
@@ -24,7 +24,7 @@ const BuyerAddressManager = ({ onAddressSelect }: Props) => {
   } = useBuyerAddresses();
 
   if (isLoading) return <LoaderState />;
-  if (error) return <NotFound />;
+  if (error) return <NotFound404 />;
 
   return (
     <>

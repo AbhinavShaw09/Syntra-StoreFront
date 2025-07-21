@@ -6,15 +6,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import BuyerAddressManager from "@/components/checkout/BuyerAddressManager";
 import { useAuth } from "@/providers/AuthProvider";
+import useAccountDetails from "@/hooks/useAccountDetails";
+import AccountOrders from "@/components/account/AccountOrders";
 
 export default function AccountPage() {
   const { user, logout } = useAuth();
-
-  async function handleLogout() {
-    if (user) {
-      logout();
-    }
-  }
+  const { accountDetails } = useAccountDetails();
 
   return (
     <div className="max-w-5xl mx-auto py-12">
@@ -37,19 +34,19 @@ export default function AccountPage() {
 
             <TabsContent value="orders">
               {user ? (
-                <div>
-                  <h3 className="text-xl font-semibold mb-4">Order History</h3>
-                  <p>You have not placed any orders yet.</p>
-                </div>
+                <AccountOrders />
               ) : (
-                <div>
-                  <h3 className="text-xl font-semibold mb-4">Login Required</h3>
-                  <p>
+                <div className="text-center space-y-4">
+                  <h3 className="text-xl font-semibold">Login Required</h3>
+                  <p className="text-muted-foreground">
                     Please{" "}
-                    <Link href="/auth/login" className="text-blue-600">
+                    <Link
+                      href="/auth/login"
+                      className="text-blue-600 underline"
+                    >
                       login
                     </Link>{" "}
-                    to view your order history.
+                    to view your orders.
                   </p>
                 </div>
               )}
@@ -64,11 +61,14 @@ export default function AccountPage() {
                   <BuyerAddressManager />
                 </div>
               ) : (
-                <div>
-                  <h3 className="text-xl font-semibold mb-4">Login Required</h3>
-                  <p>
+                <div className="text-center space-y-4">
+                  <h3 className="text-xl font-semibold">Login Required</h3>
+                  <p className="text-muted-foreground">
                     Please{" "}
-                    <Link href="/auth/login" className="text-blue-600">
+                    <Link
+                      href="/auth/login"
+                      className="text-blue-600 underline"
+                    >
                       login
                     </Link>{" "}
                     to manage your addresses.
@@ -79,24 +79,59 @@ export default function AccountPage() {
 
             <TabsContent value="profile">
               {user ? (
-                <div>
-                  <h3 className="text-xl font-semibold mb-4">
+                <div className="space-y-6">
+                  <h3 className="text-2xl font-bold tracking-tight">
                     Account Details
                   </h3>
-                  <p>Update your name, email, or password here.</p>
-                  <button
-                    className="mt-4 bg-blue-600 text-white px-4 py-2 rounded-2xl"
-                    onClick={handleLogout}
-                  >
-                    Logout
-                  </button>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-muted-foreground">
+                    <div>
+                      <p className="text-xs text-gray-500 mb-1">Username</p>
+                      <p className="text-base text-foreground">
+                        {accountDetails?.username}
+                      </p>
+                    </div>
+
+                    <div>
+                      <p className="text-xs text-gray-500 mb-1">Email</p>
+                      <p className="text-base text-foreground">
+                        {accountDetails?.email}
+                      </p>
+                    </div>
+
+                    <div>
+                      <p className="text-xs text-gray-500 mb-1">First Name</p>
+                      <p className="text-base text-foreground">
+                        {accountDetails?.first_name}
+                      </p>
+                    </div>
+
+                    <div>
+                      <p className="text-xs text-gray-500 mb-1">Last Name</p>
+                      <p className="text-base text-foreground">
+                        {accountDetails?.last_name}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div>
+                    <button
+                      onClick={logout}
+                      className="bg-destructive hover:bg-destructive/90 text-white px-5 py-2 text-sm rounded-xl transition-all"
+                    >
+                      Logout
+                    </button>
+                  </div>
                 </div>
               ) : (
-                <div>
-                  <h3 className="text-xl font-semibold mb-4">Login Required</h3>
-                  <p>
+                <div className="text-center space-y-4">
+                  <h3 className="text-xl font-semibold">Login Required</h3>
+                  <p className="text-muted-foreground">
                     Please{" "}
-                    <Link href="/auth/login" className="text-blue-600">
+                    <Link
+                      href="/auth/login"
+                      className="text-blue-600 underline"
+                    >
                       login
                     </Link>{" "}
                     to view and manage your account details.

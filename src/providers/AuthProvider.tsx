@@ -11,17 +11,8 @@ import { jwtDecode } from "jwt-decode";
 import { apiFetch } from "@/lib/api";
 import { BakckendEndpoints } from "@/utils/endpoints";
 import { useCart } from "./CartProvider";
+import { DecodedToken, User } from "@/types/auth";
 
-type DecodedToken = {
-  username: string;
-  exp: number;
-  iat: number;
-};
-
-type User = {
-  accessToken: string;
-  decoded: DecodedToken;
-};
 
 type AuthContextType = {
   user: User | null;
